@@ -1,3 +1,3 @@
 start
-git clone
+git pull
 
