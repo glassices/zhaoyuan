@@ -1,3 +1,2 @@
-start
-git pull
+start git pull
 
