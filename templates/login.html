@@ -1,0 +1,18 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('.static', filename='signin.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form class="form-signin" method=post action="/login">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">Student Number</label>
+        {{ form.username(class="form-control", placeholder="Student Number") }}
+        <label for="password" class="sr-only">Password</label>
+        {{ form.password(class="form-control", placeholder="Password") }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '{{ url_for("change") }}'">Change password</button>
+    </form>
+</div>
+{% endblock %}

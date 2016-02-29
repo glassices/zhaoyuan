@@ -1,0 +1,80 @@
+<html>
+    <body>
+        {% if current_user.is_authenticated %}
+          Hi {{ current_user.id }}!
+        {% endif %}
+        <br>
+        必限GPA: {{gpa['REQ_GPA']}}
+        <br>
+        总GPA: {{gpa['ALL_GPA']}}
+        <br>
+        学分总分: {{gpa['TOT_GPA']}}
+        <br>
+        {% if talent %}
+        基科班的必限GPA 60%为{{t6_req}}。<br>
+        基科班的必限GPA 40%为{{t4_req}}，80%为{{t8_req}}，综合GPA 40%为{{t4_all}}，综合GPA 80%为{{t8_all}}，学分和 40%为{{t4_tot}}，80%为{{t8_tot}}。
+        <br>
+        {% for idx in season_tuple %}
+        {{idx[0][0]}}年{% if idx[0][1] %}秋季{% else %}春季{% endif %}的总GPA为{{idx[1]}}，基科班内排名为{{rt[idx[0]]}}。
+        <br>
+        {% endfor %}
+        {% for idx in year_tuple %}
+        {{idx[0]}}-{{idx[0]+1}}学年的总GPA为{{idx[1]}}，基科班内排名为{{ry[idx[0]]}}。
+        <br>
+        {% endfor %}
+        {% else %}
+        化学班（非基科）的必限GPA 40%为{{n4_req}}，80%为{{n8_req}}，综合GPA 40%为{{n4_all}}，综合GPA 80%为{{n8_all}}，学分和 40%为{{n4_tot}}，80%为{{n8_tot}}。
+        <br>
+        {% for idx in season_tuple %}
+        {{idx[0][0]}}年{% if idx[0][1] %}秋季{% else %}春季{% endif %}的总GPA为{{idx[1]}}，本班内排名为{{rt1[idx[0]]}}，年级内（不含基科班）排名为{{rt2[idx[0]]}}。
+        <br>
+        {% endfor %}
+        {% for idx in year_tuple %}
+        {{idx[0]}}-{{idx[0]+1}}学年的总GPA为{{idx[1]}}，本班内排名为{{ry1[idx[0]]}}，年级内（不含基科班）排名为{{ry2[idx[0]]}}。
+        <br>
+        {% endfor %}
+        {% endif %}
+        <br>
+        <form method='POST' action='/index'>
+            第一志愿 {{ form.choice_list1(placeholder="--select--") }} <br>
+            第二志愿 {{ form.choice_list2(placeholder="--select--") }} <br>
+            第三志愿 {{ form.choice_list3(placeholder="--select--") }} <br>
+            {{ form.submit() }}
+        </form>
+        <br>
+        <table border="solid #add9c0" border-width="1px 0px 0px 1px">
+            <tr>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>教学班级</td>
+                <td>课程号</td>
+                <td>课程名</td>
+                <td>课序号</td>
+                <td>成绩</td>
+                <td>考试时间</td>
+                <td>学分</td>
+                <td>课程属性</td>
+                <td>教室号</td>
+                <td>教师名</td>
+                <td>重修补考标志</td>
+            </tr>
+            {% for item in data %}
+            <tr>
+                <td>{{item.SID}}</td>
+                <td>{{item.NAME}}</td>
+                <td>{{item.CLASS}}</td>
+                <td>{{item.CID}}</td>
+                <td>{{item.CNAME}}</td>
+                <td>{{item.CTAG}}</td>
+                <td>{{item.GRADE}}</td>
+                <td>{{item.TIME}}</td>
+                <td>{{item.CREDIT}}</td>
+                <td>{{item.CATEGORY}}</td>
+                <td>{{item.PLACE}}</td>
+                <td>{{item.PROF}}</td>
+                <td>{{item.TAG}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

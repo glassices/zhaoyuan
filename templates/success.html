@@ -1,0 +1,15 @@
+{% extends "bootstrap/base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('.static', filename='signin.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form class="form-signin" method=get action="/login">
+        <h2 class="form-signin-heading">Password changed successfully</h2>
+        <button type=submit class="btn btn-lg btn-primary btn-block">Click here to return</button>
+    </form>
+</div>
+{% endblock %}
+
+

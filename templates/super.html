@@ -1,0 +1,18 @@
+<table border=1>
+    <tr>
+        <td>学号</td>
+        <td>姓名</td>
+        <td>第一志愿</td>
+        <td>第二志愿</td>
+        <td>第三志愿</td>
+    </tr>
+    {% for item in choices %}
+    <tr>
+        <td>{{item.USERNAME}}</td>
+        <td>{{item.NAME}}</td>
+        <td>{{item.CHOICE1}}</td>
+        <td>{{item.CHOICE2}}</td>
+        <td>{{item.CHOICE3}}</td>
+    </tr>
+    {% endfor %}
+</table>
