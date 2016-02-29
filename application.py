@@ -143,6 +143,13 @@ def init_the_database():
             for y in dic[x]:
                 get_db().execute("INSERT INTO GRADES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", (unicode(total), x[0].decode('utf-8'), x[1].decode('utf-8'), x[2].decode('utf-8'), y[0].decode('utf-8'), y[1].decode('utf-8'), y[2].decode('utf-8'), y[3].decode('utf-8'), y[4].decode('utf-8'), y[5].decode('utf-8'), y[6].decode('utf-8'), y[7].decode('utf-8'), y[8].decode('utf-8'), y[9].decode('utf-8')))
                 total = total + 1
+        get_db().commit()
+
+        for x in dic:
+            print x[0]
+            if get_db().execute("SELECT NAME from GRADES where SID = ?;", [x[0]]).fetchone() is None:
+                get_db().execute("INSERT INTO USERS VALUES (?, ?, ?);", (x[0].decode('utf-8'), x[0].decode('utf-8'), u''))
+        get_db().commit()
 
         cursor = get_db().execute("SELECT * from GRADES")
         data = [make_dict(cursor, row) for row in cursor.fetchall()]
@@ -474,10 +481,15 @@ class LoginForm(Form):
 
         if self.username.data == 'admin' and self.password.data == 'qwer1234':
             return True
+
+        print self.username.data
         cursor = get_db().execute("SELECT * from USERS where USERNAME = ?;", [self.username.data])
-        userrow = make_dict(cursor, cursor.fetchone())
+        cnt = cursor.fetchone()
+        print cnt
+        if cnt is None:
+            return False
+        userrow = make_dict(cursor, cnt)
         if userrow is None:
-            print self.username.errors
             #self.username.errors.append('Unknown username')
             return False
 
@@ -698,6 +710,7 @@ def login():
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if init_the_database():
+        make_excel()
         return redirect(url_for('super'))
     else:
         return 'update failed'
