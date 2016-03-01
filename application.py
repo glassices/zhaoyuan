@@ -9,12 +9,11 @@ from flask.ext.login import LoginManager, UserMixin, login_user, login_required,
 from flask_bootstrap import Bootstrap
 import sqlite3
 import pickle
-#import xlwt
+import xlwt
 import urllib2
 import urllib
 import cookielib
 import re
-from pyquery import PyQuery as pq
 
 app = Flask(__name__)
 app.config['DEBUG'] = False
@@ -259,7 +258,6 @@ def init_the_database():
         return False
 
 def make_excel():
-    """
     cursor = get_db().execute("SELECT * from GRADES;")
     grades  = [make_dict(cursor, row) for row in cursor.fetchall()]
     cursor = get_db().execute("SELECT * from GPA;")
@@ -457,8 +455,6 @@ def make_excel():
                 l_tags += 3
         
     w.save('static/heiheihei.xls')
-    """
-    pass
 
 
 class User(UserMixin):
